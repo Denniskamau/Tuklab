@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Tuklab{% endblock %}
+{% block page_content %}
+<body>
+<script type="text/javascript">
+$(function() {
+    $('#btnRegister').click(function() {
+ 
+        $.ajax({
+            url: '/signUp',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+</script>
+	<div class = "container">
+		<h4>Register</h4>
+		<br>
+		{% from "_formhelpers.html" import render_field %}
+		<form method="POST" action="/register/">
+			<dl>
+				{{render_field(form.username)}}
+				{{render_field(form.email)}}
+				{{render_field(form.password)}}
+				{{render_field(form.confirm)}}
+				{{render_field(form.accept_tos)}}
+			</dl>
+			<p><input id="btnRegister" type=submit value=Register ></p>
+		</form>
+		
+		{% if error %}
+			<p class="error"><strong>Error:</strong>{{error}}</p>
+		{% endif %}
+
+	</div>
+</body>
+
+{% endblock %}
